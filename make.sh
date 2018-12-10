@@ -8,7 +8,7 @@ export TEXINPUTS="$TEXINPUTS:data"
 
 unset PYTHONWARNINGS
 
-LATEXRUN="latexrun --verbose-cmds -O out poster.tex"
+LATEXRUN="./latexrun --verbose-cmds -O out poster.tex"
 
 if [[ "$1" = "watch" ]]; then
   git ls-files | entr $LATEXRUN
