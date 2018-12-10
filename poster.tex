@@ -32,7 +32,8 @@
 \usepackage[english]{babel}
 \usepackage{wrapfig}
 \usepackage[skins,listings]{tcolorbox}
-
+\usepackage{graphicx}
+\graphicspath{ {./media/} }
 \pgfdeclarelayer{foreground}
 \pgfsetlayers{main,foreground}
 
@@ -157,7 +158,7 @@
     \begin{column}{.45\linewidth}
       \begin{tcolorbox}[toplevelbox,adjusted title={Problem Statement}]
         \ Fast multipole method(FMM) is a well known algorithm for N-body simulation. Naïve algorithm would have a complexity of O(N\textsuperscript{2}) because the influence of all other particles have to be calculated for each target particle. FMM reduces the complexity to O(N).However, the efficiency also highly depends on the implementation. 
-        \\  Professor Andreas Kloeckner wrote a module called Boxtree for the FMM, which has high-performance parallel GPU implementation to sort all the particles into boxes, which is the first stage of the algorithm. There are also template functions for the rest of the stages, but only a  baseline serial execution path, which would not exploit multicore architecture. A better implementation for is needed to replace the baseline solution.
+        \\  Professor Andreas Kloeckner wrote a module called Boxtree for the FMM, which has high-performance parallel GPU implementation to sort all the particles into boxes, which is the first stage of the algorithm. There are also template functions for the rest of the stages, but those functions only has a baseline serial execution path, which would not exploit multicore architecture. A better implementation for is needed to replace the baseline solution.
         
       \end{tcolorbox}
 
@@ -165,7 +166,7 @@
         \ A task graph integrating Boxtree with a runtime system is proposed as the 
           solution. The task graph is a list of funtions, which are called task. The runtime system can schdule the tasks on different processors so that different tasks can be run simultaneously with dependency specified. The runtime system
           used is called charm4py. charm4py is a high-level parallel and distributed programming framework. It's used for communication between tasks on different
-          processors and specifying the execution order. With this integration, it will be able to exploit more of the 
+          processors and specifying the execution order. With this integration, it will be able to utilize the multicore structure.
       \end{tcolorbox}
 
       \begin{tcolorbox}[toplevelbox,adjusted title=Tech Detail 1]
@@ -173,7 +174,7 @@
         number of particles, it is further divided into four child boxes. The algorithm first calcualte the multiple expansion for all child-less boxes. It use these
         multipole expansion to calcualte the multipole expansion for higher level boxes.
         Interaction between adjacent boxes are directly calcualted, interaction between
-        non-adjacent boxes can be calculated by using those multipole expansions to calculate local expansions. The algorithm is complicated, this is only a brief introduction.
+        non-adjacent boxes can be calculated by using those multipole expansions to calculate local expansions.
         \\ First step was to identify the independent steps in the algorithm. It was clear that calculating the direct interaction is not dependent on any other stages other than the sorting stage. All the other stages depends on The second stage, which is to calculate the multipole expansion of all boxes. Stage 2 must starts at beginning. Stage 5 is evaluating multipole expansion for some boxes, which is also independent. Step 4,6 are for calculating the local expansions, which can be separated. Stage 7 is using the result of step 4,6 to calculate the local expansion for smaller boxes. Charm4py has a reduction feature which can
         collect output through different processes and process only after receives all
         the dependencies. 7 must be executed after 4 and 6 finishes. Finally, the sum up stage can run after collecting output from all other tasks.
@@ -193,9 +194,8 @@
 
       \begin{tcolorbox}[toplevelbox,adjusted title=Results]
         \  The testing was run on a analytical routines for a Green's function that is
-        constant 1 everywhere. This is a sample function provided in the module.It will
-        get each particle a particle count. The task graph is general, any application supported by the original execution path is supported by the new task graph since all dependencies. Due to time constraint, this is the only application tested. More applications might be tested later. For each data size, the result was run ten times. The median, min and 90 percentile was shown. The input was randomly generated each run, thus avoiding the possibility that optimization only targets specific
-        distribution.
+        constant 1 everywhere. This is a sample application provided in the module. It will get each particle a particle count. The task graph is general enough to suppport many application. However,due to time constraint, this is the only one tested. Chart1 is the performance.Each task graph was run for ten times on each different data sizes. Min, median and 90 percentile are shown
+        \includegraphics{universe}
       \end{tcolorbox}
 
       \begin{tcolorbox}[toplevelbox,adjusted title=References]
