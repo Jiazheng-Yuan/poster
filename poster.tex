@@ -1,0 +1,199 @@
+\documentclass[final,t]{beamer}
+
+% retrieved from
+% http://www-i6.informatik.rwth-aachen.de/~dreuw/latexbeamerposter.php
+
+% {{{ preamble
+
+% Siebel poster printer paper width -- ANSI E: 34"x44"
+% Fedex Office: 24"x36" or 36"x48"
+
+\pgfmathsetmacro{\posterheight}{34*2.54}
+\pgfmathsetmacro{\posterwidth}{22*2.54}
+
+\usepackage[orientation=landscape,size=custom,width=\posterwidth,height=\posterheight,scale=1.18]{beamerposter}
+
+\mode<presentation>
+\usetheme{uiucposter}
+
+% {{{ additional packages
+
+\usepackage{lipsum}
+\usepackage[utf8]{inputenc}
+%\usepackage{times}
+\usepackage{amsmath,amsthm, amssymb, latexsym}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{exscale}
+%\usepackage[lighttt]{lmodern}
+%\boldmath
+\usepackage{booktabs, array}
+%\usepackage{rotating} %sideways environment
+\usepackage[english]{babel}
+\usepackage{wrapfig}
+\usepackage[skins,listings]{tcolorbox}
+
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{main,foreground}
+
+% }}}
+
+% {{{ tikz
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fadings}
+\usetikzlibrary{chains}
+\usetikzlibrary{scopes}
+\usetikzlibrary{shadows}
+\usetikzlibrary{arrows}
+\usetikzlibrary{snakes}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shapes.multipart}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes.arrows}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes.callouts}
+\usetikzlibrary{decorations.text}
+
+% }}}
+
+% {{{ box config
+
+\tcbset{toplevelbox/.style={%
+    enhanced,
+    fuzzy shadow={5mm}{-5mm}{0mm}{1mm}{black},
+    colback=white,
+    fonttitle=\bfseries,
+    coltitle=white,
+    colframe=uiucblue,
+    boxsep=20pt,
+    arc=10pt,
+    top=0pt,
+    boxrule=0pt,
+    toptitle=-10pt,
+    bottomtitle=-10pt,
+    enlarge bottom by=1.25cm,
+    titlerule=0pt,
+  }
+}
+
+% }}}
+
+% {{{ listing config
+
+\tcbset{listing engine=listings}
+\tcbset{listingbox/.style={%
+    enhanced,
+    %boxsep=-9pt,
+    %left=15pt,
+    arc=7pt,
+    enlarge top by=4mm,
+    %enlarge bottom by=1mm,
+    boxrule=2pt,
+  }
+}
+
+\definecolor{green}{RGB}{0, 180, 0}
+
+\lstdefinestyle{custompython}{%
+  %belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=none,
+  xleftmargin=\parindent,
+  language=Python,
+  showstringspaces=false,
+  basicstyle=\ttfamily,
+  keywordstyle=\bfseries\color{uiucblue},
+  commentstyle=\itshape\color{purple},
+  identifierstyle=\color{black},
+  stringstyle=\color{uiuclightblue},
+  keywords=[2]{as,True,False},
+  keywordstyle=[2]\bfseries\color{green!40!black},
+  otherkeywords={>>>,...},
+  keywordstyle=[3]\bfseries\color{blue},
+  numbers=none,
+  columns=flexible,
+  rangebeginprefix=\>\>\>\ \#\ ,
+  rangeendprefix=\>\>\>\ \#\ ,
+  includerangemarker=false,
+}
+
+\newtcbinputlisting{\mylisting}[2][]{%
+  listing file={#2},
+  listingbox,
+  listing only,
+  listing options={style=custompython,linerange=#1},
+}
+
+% }}}
+
+% Display a grid to help align images
+%\beamertemplategridbackground[1cm]
+
+% }}}
+
+
+% {{{ front matter
+
+\title{Poster Template}
+\author{Poster Author \texttt{<author@illinois.edu>}}
+\institute{%
+  Computer Science
+  $\cdot$ University of Illinois
+}
+\date{December 12, 2018}
+
+% }}}
+
+\begin{document}
+\begin{frame}[fragile]{}
+  \begin{columns}[t]
+
+    % {{{ left column
+
+    \begin{column}{.45\linewidth}
+      \begin{tcolorbox}[toplevelbox,adjusted title={Problem Statement}]
+        \ Fast multipole method(FMM) is a well known algorithm for N-body simulation. Naïve algorithm would have a complexity of O(N^2) because the influence of all other particles have to be calculated for each target particle. FMM reduces the complexity to O(N), which is recognized as one of the top ten algorithms in 20th century.The efficiency also highly depends on the implementation. 
+        \ Professor Andreas Kloeckner wrote a module for the FMM, which has parallel GPU implementation to sort all the particles into boxes, for the first stage of the algorithm. There are also templating functions for the rest of the stages, but only a  baseline serial execution path, which would not exploit multicore architecture.
+      \end{tcolorbox}
+
+      \begin{tcolorbox}[toplevelbox,adjusted title=Approach]
+        \lipsum[2-3]
+      \end{tcolorbox}
+
+      \begin{tcolorbox}[toplevelbox,adjusted title=Tech Detail 1]
+        \lipsum[4]
+      \end{tcolorbox}
+
+    \end{column}
+
+    % }}}
+
+    % {{{ right column
+
+    \begin{column}{.45\linewidth}
+      \begin{tcolorbox}[toplevelbox,adjusted title=Tech Detail 2]
+        \lipsum[5]
+      \end{tcolorbox}
+
+      \begin{tcolorbox}[toplevelbox,adjusted title=Results]
+        \lipsum[6-7]
+      \end{tcolorbox}
+
+      \begin{tcolorbox}[toplevelbox,adjusted title=References]
+        \lipsum[8]
+      \end{tcolorbox}
+
+    \end{column}
+
+    % }}}
+
+  \end{columns}
+\end{frame}
+
+\end{document}
+
+% vim: foldmethod=marker
