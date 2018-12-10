@@ -156,20 +156,20 @@
 
     \begin{column}{.45\linewidth}
       \begin{tcolorbox}[toplevelbox,adjusted title={Problem Statement}]
-        \ Fast multipole method(FMM) is a well known algorithm for N-body simulation. Naïve algorithm would have a complexity of O(N\textsuperscript{2}) because the influence of all other particles have to be calculated for each target particle. FMM reduces the complexity to O(N), which is recognized as one of the top ten algorithms in 20th century.The efficiency also highly depends on the implementation. 
-        \\ Professor Andreas Kloeckner wrote a module for the FMM, which has parallel GPU implementation to sort all the particles into boxes, for the first stage of the algorithm. There are also templating functions for the rest of the stages, but only a  baseline serial execution path, which would not exploit multicore architecture.
-        \\The goal is to build a task graph with runtime system so parallelism can be applied and exploit the benefit of  multiprocessors. The task graph is a integration of 
-the boxtree module with a runtime system which can
-schedule tasks and utilizes as much processors as possible.
-
+        \ Fast multipole method(FMM) is a well known algorithm for N-body simulation. Naïve algorithm would have a complexity of O(N\textsuperscript{2}) because the influence of all other particles have to be calculated for each target particle. FMM reduces the complexity to O(N).However, the efficiency also highly depends on the implementation. 
+        \\  Professor Andreas Kloeckner wrote a module called Boxtree for the FMM, which has high-performance parallel GPU implementation to sort all the particles into boxes, which is the first stage of the algorithm. There are also template functions for the rest of the stages, but only a  baseline serial execution path, which would not exploit multicore architecture. A better implementation for is needed to replace the baseline solution.
+        
       \end{tcolorbox}
 
       \begin{tcolorbox}[toplevelbox,adjusted title=Approach]
-        \lipsum[2-3]
+        \ A task graph integrating Boxtree with a runtime system is proposed as the 
+          solution. The task graph is a list of funtions, which are called task. The runtime system can schdule the tasks on different processors so that different tasks can be run simultaneously with dependency specified. The runtime system
+          used is called charm4py. charm4py is a high-level parallel and distributed programming framework. It's used for communication between tasks on different
+          processors and specifying the execution order.
       \end{tcolorbox}
 
       \begin{tcolorbox}[toplevelbox,adjusted title=Tech Detail 1]
-        \lipsum[4]
+        \ 
       \end{tcolorbox}
 
     \end{column}
