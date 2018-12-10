@@ -156,8 +156,8 @@
 
     \begin{column}{.45\linewidth}
       \begin{tcolorbox}[toplevelbox,adjusted title={Problem Statement}]
-        \ Fast multipole method(FMM) is a well known algorithm for N-body simulation. Naïve algorithm would have a complexity of O(N^2) because the influence of all other particles have to be calculated for each target particle. FMM reduces the complexity to O(N), which is recognized as one of the top ten algorithms in 20th century.The efficiency also highly depends on the implementation. 
-
+        \ Fast multipole method(FMM) is a well known algorithm for N-body simulation. Naïve algorithm would have a complexity of O(N) because the influence of all other particles have to be calculated for each target particle. FMM reduces the complexity to O(N), which is recognized as one of the top ten algorithms in 20th century.The efficiency also highly depends on the implementation. 
+        \ Professor Andreas Kloeckner wrote a module for the FMM, which has parallel GPU implementation to sort all the particles into boxes, for the first stage of the algorithm. There are also templating functions for the rest of the stages, but only a  baseline serial execution path, which would not exploit multicore architecture.
       \end{tcolorbox}
 
       \begin{tcolorbox}[toplevelbox,adjusted title=Approach]
