@@ -169,16 +169,15 @@
       \end{tcolorbox}
 
       \begin{tcolorbox}[toplevelbox,adjusted title=Tech Detail 1]
-        \ The algorithm group particles into boxes. If a box has more than the specified
-        number of patricles, it is further divided into four child boxes. The algorithm first calcualte the multiple expansion for all child-less boxes. It use these
-        multipole expansion to calcualte the multipole expansion for parent level boxes.
+        \ The algorithm groups particles into boxes. If a box has more than the specified
+        number of particles, it is further divided into four child boxes. The algorithm first calcualte the multiple expansion for all child-less boxes. It use these
+        multipole expansion to calcualte the multipole expansion for higher level boxes.
         Interaction between adjacent boxes are directly calcualted, interaction between
-        non-adjacent boxes can be calculated by using those multipole expansions to calculate local expansions. The algorithm is very complicated, this is only a brief introduction.
-        \\ Different approaches were conducted in order to exploit the multicore machine.
-        First step was to identify the non-dependent steps in the algorithm. It was clear that calculating the direct interaction is not dependent on any other stages other
-        than the sorting stage. Therefore it becomes a independent task which is started at very beginning. All the other stages depends on The second stage, which is to calculate the multipole expansion of all boxes. So step2 is the second task to start. Stage 5 is evaluating multipole expansion for some boxes, which is also independent. Step 4,6 are for calculating the local expansions, which can be separated. Stage 7 is using the result of step 4,6 to calculate the local expansion for smaller boxes. Charm4py has a feature called reduction which can
+        non-adjacent boxes can be calculated by using those multipole expansions to calculate local expansions. The algorithm is complicated, this is only a brief introduction.
+        \\ Different approaches were conducted .First step was to identify the non-dependent steps in the algorithm. It was clear that calculating the direct interaction is not dependent on any other stages other
+        than the sorting stage. Therefore it becomes a independent task which is started at very beginning. All the other stages depends on The second stage, which is to calculate the multipole expansion of all boxes. Stage 2 is specified as the second task . Stage 5 is evaluating multipole expansion for some boxes, which is also independent. Step 4,6 are for calculating the local expansions, which can be separated. Stage 7 is using the result of step 4,6 to calculate the local expansion for smaller boxes. Charm4py has a reduction feature which can
         collect output through different processes and process only after receives all
-        the dependencies. So 7 can be executed after 4 and 6 finishes. Finally stage
+        the dependencies. 7 must be executed after 4 and 6 finishes. Finally stage
         8 runs after all the other stages to evaluate local expansions and sums everything
         up.
       \end{tcolorbox}
