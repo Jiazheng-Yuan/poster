@@ -188,11 +188,14 @@
     \begin{column}{.45\linewidth}
       \begin{tcolorbox}[toplevelbox,adjusted title=Tech Detail 2]
         \ Further optimization are conducted in order to achieve better performance. Not all the stages have same runtime. After measurement, it was first identified that 
-        calculating direct interaction is taking significantly longer than any other stages. Thus the first approach was to break it down into smaller taks. The optimization was to distribute the boxes onto processors evenly. Timing this section shows that some processors takes much less time to complete because the distribution of particles are not even. Thus each processor would process a similar number of particles.
+        calculating direct interaction is taking significantly longer than any other stages. Thus the first approach was to break it down into smaller tasks. The optimization was to distribute the boxes onto processors evenly. Timing this section shows that some processors takes much less time to complete because the distribution of particles are not even. Thus each processor would process a similar number of particles. This is a preliminary optimization. Similar approach will be applied to other stages if possible.
       \end{tcolorbox}
 
       \begin{tcolorbox}[toplevelbox,adjusted title=Results]
-        \lipsum[6-7]
+        \  The testing was run on a analytical routines for a Green's function that is
+        constant 1 everywhere. This is a sample function provided in the module.It will
+        get each particle a particle count. The task graph is general, any application supported by the original execution path is supported by the new task graph since all dependencies. Due to time constraint, this is the only application tested. More applications might be tested later. For each data size, the result was run ten times. The median, min and 90 percentile was shown. The input was randomly generated each run, thus avoiding the possibility that optimization only targets specific
+        distribution.
       \end{tcolorbox}
 
       \begin{tcolorbox}[toplevelbox,adjusted title=References]
