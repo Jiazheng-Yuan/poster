@@ -139,7 +139,7 @@
 
 % {{{ front matter
 
-\title{FFM parallel task graph}
+\title{FMM parallel task graph}
 \author{Jiazheng Yuan \texttt{<jyuan18@illinois.edu>}}
 \institute{%
   Computer Science
@@ -189,7 +189,7 @@
     \begin{column}{.45\linewidth}
       \begin{tcolorbox}[toplevelbox,adjusted title=Tech Detail 2]
         \ Further optimization are conducted in order to achieve better performance. Not all the stages have same runtime. After measurement, it was first identified that 
-        calculating direct interaction is taking significantly longer than any other stages. Thus the first approach was to break it down into smaller tasks. The optimization was to distribute the boxes onto processors evenly. Timing this section shows that some processors takes much less time to complete because the distribution of particles are not even. Thus each processor are distributed with a similar number of particles. This is still a preliminary optimization. Similar approach will be applied to other stages if possible.
+        calculating direct interaction is taking significantly longer than any other stages. Thus the first approach was to break it down into smaller tasks. The optimization was to distribute the boxes onto processors evenly. This is still a preliminary optimization. Similar approach will be applied to other stages if possible.
       \end{tcolorbox}
 
       \begin{tcolorbox}[toplevelbox,adjusted title=Results]
